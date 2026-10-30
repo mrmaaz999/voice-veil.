@@ -20,6 +20,16 @@ Manual start (Python 3.10–3.13; if pip wants a C++ compiler you are on a Pytho
     python -m pip install -r requirements.txt
     python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 
+## Deploy to Render
+
+The repository includes a root-level `render.yaml` Blueprint for deploying the full FastAPI app, including its WebSocket audio stream:
+
+1. Sign in to [Render](https://render.com/) and choose **New + → Blueprint**.
+2. Connect this GitHub repository and select the `main` branch. Render will read `render.yaml` and create the service.
+3. Wait for the first build to finish, then open the service's `onrender.com` URL.
+
+The bundled model is used at startup. The free instance may sleep when idle, so the first request after inactivity can take longer. Its filesystem is ephemeral; saved event logs may be lost when the service restarts. Audio is sent to the hosted server for processing in memory and is not stored. Only the time and score of high-risk events are logged. This prototype is not a validated deepfake detector; do not rely on its output for real calls.
+
 ## Tests (PowerShell; 21 backend tests, 8 frontend tests, browser E2E)
 
     cd C:\path\to\voice-veil\backend

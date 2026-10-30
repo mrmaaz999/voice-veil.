@@ -31,7 +31,7 @@ canvas{width:100%;display:block;border-radius:12px;background:#0e1530}#wave{heig
 #err{display:none;background:#ff4d6a1f;border:1px solid #ff4d6a66;color:#ffb3c0;border-radius:12px;padding:10px 14px;font-size:13px;margin-bottom:12px}
 </style></head><body>
 <header><div class="brand"><img src="/icon.svg" alt=""><div><b>VOICE VEIL</b><small>Live deepfake call shield · Team AVENGERS · Dexathon 2026</small></div></div>
-<div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill on" title="Audio is processed in server memory on this machine. Only time and score of HIGH events are saved.">🔒 Local processing · no audio stored</span><span class="pill" id="conn">Idle</span></div></header>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill on" title="Audio is sent to and processed in the app server's memory. Audio is not stored; only time and score of HIGH events are saved.">🔒 Server processing · no audio stored</span><span class="pill" id="conn">Idle</span></div></header>
 <div class="banner"><div><b>PROTOTYPE MODEL.</b> <span id="minfo">Loading…</span> Scores are indicators, not proof that a voice is cloned. <b>In our checks this prototype flagged ordinary recorded human speech as high risk</b> (it has never seen real speech or real clones), so its warnings demonstrate the pipeline only and are not a reliable detector.</div></div>
 <main><div class="col">
 <section class="card hero" id="hero" aria-live="polite"><div class="ring"><svg width="180" height="180" viewBox="0 0 180 180"><circle class="bg" cx="90" cy="90" r="70"/><circle class="fg" id="fg" cx="90" cy="90" r="70"/></svg><div class="mid"><b id="score">—</b><span>NATURALNESS</span></div></div>
