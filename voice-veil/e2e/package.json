@@ -1,0 +1,3 @@
+{ "name": "voice-veil-e2e", "private": true, "type": "module",
+  "scripts": { "unit": "node --test unit.test.mjs" },
+  "dependencies": { "puppeteer-core": "*" }, "optionalDependencies": { "@sparticuz/chromium": "*" } }

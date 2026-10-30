@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1020"><link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/icon.svg">
+<title>Voice Veil – Live Deepfake Call Shield</title>
+<style>
+:root{--bg:#0b1020;--card:#131a31;--card2:#1b2445;--ink:#eef1fb;--mut:#97a3c4;--acc:#7c8cff;--acc2:#b07cff;--ok:#2fcf8f;--warn:#f5b301;--bad:#ff4d6a;--line:#ffffff14}
+*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;background:radial-gradient(1100px 520px at 50% -12%,#2a3577 0,var(--bg) 62%) fixed;color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:env(safe-area-inset-top) 0 40px}
+a,button,select,input{font:inherit}:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+header{max-width:1120px;margin:0 auto;padding:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:12px;align-items:center}.brand img{width:42px;height:42px;border-radius:12px}.brand b{font-size:20px;letter-spacing:.03em}.brand small{display:block;color:var(--mut);font-size:12px}
+.pill{font-size:12px;padding:6px 12px;border-radius:99px;background:var(--card2);border:1px solid var(--line);color:var(--mut)}.pill.on{color:var(--ok);border-color:#2fcf8f55}
+.banner{max-width:1120px;margin:0 auto 4px;padding:0 16px}.banner div{background:#f5b30118;border:1px solid #f5b30144;color:#ffd666;border-radius:12px;padding:10px 14px;font-size:13px;line-height:1.45}
+main{max-width:1120px;margin:12px auto;padding:0 16px;display:grid;gap:14px;grid-template-columns:1.4fr 1fr}@media(max-width:860px){main{grid-template-columns:1fr}}
+.col{display:grid;gap:14px;align-content:start}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
+h2{margin:0 0 12px;font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--mut);font-weight:600}
+.hero{display:grid;grid-template-columns:190px 1fr;gap:18px;align-items:center;transition:box-shadow .3s}@media(max-width:520px){.hero{grid-template-columns:1fr;text-align:center}}
+.hero.HIGH{box-shadow:0 0 0 2px var(--bad),0 0 46px #ff4d6a44}.hero.ELEVATED{box-shadow:0 0 0 2px var(--warn)}.hero.LOW_RISK{box-shadow:0 0 0 2px #2fcf8f55}
+.ring{position:relative;width:180px;height:180px;margin:auto}.ring svg{transform:rotate(-90deg)}.ring circle{fill:none;stroke-width:13;stroke-linecap:round}
+.ring .bg{stroke:#ffffff12}.ring .fg{stroke:var(--mut);stroke-dasharray:440;stroke-dashoffset:440;transition:stroke-dashoffset .5s,stroke .3s}
+.mid{position:absolute;inset:0;display:grid;place-content:center;text-align:center}.mid b{font-size:42px;line-height:1}.mid span{font-size:10px;color:var(--mut);letter-spacing:.08em;margin-top:4px}
+#state{font-size:24px;font-weight:800;margin:0 0 4px}#advice{color:var(--mut);margin:0 0 8px;line-height:1.45}#why{margin:0;padding-left:18px;color:#c9d1ec;font-size:13px;line-height:1.5}
+.tag{display:none;margin-bottom:8px;font-size:12px;font-weight:700;color:#0b1020;background:var(--warn);border-radius:8px;padding:4px 10px;width:fit-content}.tag.show{display:block}@media(max-width:520px){.tag{margin-inline:auto}}
+.ctl{display:flex;gap:10px;flex-wrap:wrap}.ctl>*{flex:1;min-width:140px}
+button{cursor:pointer;border:1px solid var(--line);background:var(--card2);color:var(--ink);padding:11px 14px;border-radius:12px;font-weight:600}button:hover{filter:brightness(1.15)}button:disabled{opacity:.45;cursor:not-allowed}
+button.go{background:linear-gradient(135deg,var(--acc),var(--acc2));border:0;color:#fff}button.stop{background:#3a2442;border-color:#ff4d6a66;color:#ffb3c0}
+select,input[type=text]{width:100%;background:var(--card2);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px}
+canvas{width:100%;display:block;border-radius:12px;background:#0e1530}#wave{height:84px}#tl{height:130px}
+.meter{margin:9px 0}.meter div:first-child{display:flex;justify-content:space-between;font-size:13px}.meter span{color:var(--mut)}.bar{height:8px;border-radius:6px;background:#ffffff12;overflow:hidden;margin-top:5px}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .4s}
+.hint{font-size:12px;color:var(--mut);line-height:1.5;margin:8px 0 0}table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:6px 0;border-bottom:1px solid var(--line);text-align:left;font-weight:400}th{color:var(--mut)}
+.stat{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;margin-top:10px}.stat b{display:block;font-size:18px}.stat span{font-size:11px;color:var(--mut)}
+#err{display:none;background:#ff4d6a1f;border:1px solid #ff4d6a66;color:#ffb3c0;border-radius:12px;padding:10px 14px;font-size:13px;margin-bottom:12px}
+</style></head><body>
+<header><div class="brand"><img src="/icon.svg" alt=""><div><b>VOICE VEIL</b><small>Live deepfake call shield · Team AVENGERS · Dexathon 2026</small></div></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill on" title="Audio is processed in server memory on this machine. Only time and score of HIGH events are saved.">🔒 Local processing · no audio stored</span><span class="pill" id="conn">Idle</span></div></header>
+<div class="banner"><div><b>PROTOTYPE MODEL.</b> <span id="minfo">Loading…</span> Scores are indicators, not proof that a voice is cloned. <b>In our checks this prototype flagged ordinary recorded human speech as high risk</b> (it has never seen real speech or real clones), so its warnings demonstrate the pipeline only and are not a reliable detector.</div></div>
+<main><div class="col">
+<section class="card hero" id="hero" aria-live="polite"><div class="ring"><svg width="180" height="180" viewBox="0 0 180 180"><circle class="bg" cx="90" cy="90" r="70"/><circle class="fg" id="fg" cx="90" cy="90" r="70"/></svg><div class="mid"><b id="score">—</b><span>NATURALNESS</span></div></div>
+<div><div class="tag" id="demoTag">DEMO · synthetic audio, not a real detection</div><p id="state">Not monitoring</p><p id="advice">Press Start monitoring. Put the call on speaker so the microphone can hear the caller.</p><ul id="why"></ul></div></section>
+<section class="card"><h2>Audio input</h2><div id="err" role="alert"></div>
+<div class="ctl"><select id="dev" aria-label="Microphone" title="Choose microphone"></select><select id="src" aria-label="Source" title="Tab audio works in Chrome/Edge when you tick 'Share tab audio'"><option value="mic">Microphone</option><option value="tab">Browser tab audio</option></select></div>
+<div class="ctl" style="margin:10px 0"><button class="go" id="go">▶ Start monitoring</button><button class="stop" id="stop" disabled>■ Stop</button></div>
+<canvas id="wave" width="640" height="84" aria-label="Live waveform"></canvas>
+<div class="stat"><div><b id="lat">–</b><span>model compute ms</span></div><div><b id="e2e">–</b><span>chunk→verdict ms</span></div><div><b id="lvl">–</b><span>input level</span></div><div><b id="f0">–</b><span>pitch Hz</span></div></div>
+<p class="hint" id="diag">Audio reaching backend: waiting for audio…</p><p class="hint" id="lat2"></p></section>
+<section class="card"><h2>Naturalness timeline <span style="text-transform:none;letter-spacing:0">(higher = more natural-like)</span></h2><canvas id="tl" width="640" height="130" aria-label="Score history"></canvas></section>
+</div><div class="col">
+<section class="card"><h2>Signals</h2>
+<div class="meter" title="Prototype classifier on MFCC/spectral/prosody features"><div>Acoustic cues <span id="m1">—</span></div><div class="bar"><i id="b1"></i></div></div>
+<div class="meter" title="Pitch micro-variation. Very smooth pitch scores low."><div>Pitch continuity <span id="m2">—</span></div><div class="bar"><i id="b2"></i></div></div>
+<div class="meter" title="Stability of audio-chunk arrival. Measures browser/loopback scheduling, NOT carrier network jitter."><div>Timing stability <span id="m3">—</span></div><div class="bar"><i id="b3"></i></div></div>
+<div class="meter" title="Similarity to your enrolled trusted voice"><div>Voice ID match <span id="m4">—</span></div><div class="bar"><i id="b4"></i></div></div></section>
+<section class="card"><h2>Sensitivity</h2><input type="range" id="sens" min="0" max="100" value="50" style="width:100%;accent-color:#7c8cff" aria-label="Sensitivity">
+<p class="hint">Warn when naturalness &lt; <b id="thr">0.50</b> for 3 windows in a row. Higher sensitivity warns sooner and raises false alarms.</p></section>
+<section class="card"><h2>Voice ID (optional)</h2><p class="hint" style="margin:0 0 10px" id="enSt">Record a trusted person’s real voice (12 s). The profile stays in this browser.</p>
+<div class="ctl"><button id="enroll">● Record</button><button id="clr">Clear</button></div></section>
+<section class="card"><h2>Demo mode (synthetic audio)</h2><div class="ctl"><button id="dr">Natural-like</button><button id="df">Synthetic-like</button></div><p class="hint" id="res">Runs the prototype on generated audio. Not real-world detection.</p></section>
+<section class="card"><h2>High-risk events (time + score only)</h2><table id="log"></table><div class="ctl" style="margin-top:10px"><button id="clrlog">Clear all events</button></div></section>
+</div></main>
+<script src="/static/resample.js"></script>
+<script>
+const $=i=>document.getElementById(i),LS=(k,v)=>{try{return v===undefined?JSON.parse(localStorage.getItem(k)):localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
+const NAME={MONITORING:'Monitoring',INCONCLUSIVE:'Inconclusive',LOW_RISK:'Low risk indicators',ELEVATED:'Elevated risk',HIGH:'High risk',ENROLLING:'Recording voice…'},
+ COL={MONITORING:'#97a3c4',INCONCLUSIVE:'#97a3c4',LOW_RISK:'#2fcf8f',ELEVATED:'#f5b301',HIGH:'#ff4d6a'};
+let CLIENT={},sentN=0,sentAt={},rtts=[],ws,ctx,stream,node,an,run=false,prof=LS('vv_profile'),data=[],lats=[],enrolling=false,tries=0,raf=0,stopping=false,thr=.5;
+const err=m=>{$('err').style.display=m?'block':'none';$('err').textContent=m||''};
+function showState(r){
+ const s=r.state;$('hero').className='card hero '+s;$('state').textContent=NAME[s]||s;$('state').style.color=COL[s]||'';$('advice').textContent=r.advice||'';
+ $('why').innerHTML=(r.reasons||[]).map(x=>`<li>${x.replace(/</g,'&lt;')}</li>`).join('');
+ if(r.trust==null){$('score').textContent='—';$('fg').style.strokeDashoffset=440;$('fg').style.stroke=COL[s]||'';return}
+ $('score').textContent=Math.round(r.trust*100);$('fg').style.strokeDashoffset=440*(1-r.trust);$('fg').style.stroke=COL[s];}
+function meters(sg){[['acoustic','1'],['pitch','2'],['timing','3'],['voice_id','4']].forEach(([k,i])=>{const v=sg&&sg[k];$('m'+i).textContent=v==null?'—':Math.round(v*100)+'%';$('b'+i).style.width=(v==null?0:v*100)+'%'})}
+function onMsg(r){
+ if(r.type==='profile'){prof=r.profile;LS('vv_profile',prof);enrolling=false;$('enSt').textContent='✅ Trusted voice saved in this browser.';$('enroll').textContent='● Re-record';return}
+ if(r.type==='error'){enrolling=false;$('enSt').textContent=r.msg;$('enroll').textContent='● Record';return}
+ if(r.type==='diag'){showDiag(r);return}
+ if(r.chunks!=null&&sentAt[r.chunks]!=null){rtts.push(performance.now()-sentAt[r.chunks]);if(rtts.length>40)rtts.shift()}
+ $('demoTag').classList.remove('show');
+ if(r.state==='ENROLLING'){$('enSt').textContent='Recording… '+r.count+' samples';return}
+ thr=r.threshold??thr;$('thr').textContent=thr.toFixed(2);showState(r);meters(r.signals);
+ if(r.latency_ms!=null){lats.push(r.latency_ms);if(lats.length>40)lats.shift();$('lat').textContent=[...lats].sort((a,b)=>a-b)[lats.length>>1].toFixed(1)}
+ $('f0').textContent=r.f0||'–';lat2(r);if(r.trust!=null){data.push(r.trust);if(data.length>100)data.shift();tl()}
+ if(r.state==='HIGH'){navigator.vibrate&&navigator.vibrate([250,100,250]);events()}}
+const med=a=>a.length?[...a].sort((x,y)=>x-y)[a.length>>1]:null;
+function lat2(r){const m=med(rtts);$('e2e').textContent=m==null?'–':m.toFixed(0);
+ if(r.latency_ms!=null)$('lat2').textContent=`Model compute ${r.latency_ms} ms (features ${r.feature_ms} + model ${r.infer_ms}) · server receipt→reply ${r.server_ms} ms · chunk sent→verdict received ${m==null?'–':m.toFixed(0)} ms (browser-measured). Not the whole delay: audio is buffered ≈130 ms per chunk, each decision uses a 1 s window, and a HIGH warning needs 3 low decisions in a row (≥ ~1.5 s).`}
+function showDiag(r){const ok=r.rate_ok,rt=r.rate_hz==null?'measuring…':(r.rate_hz/1000).toFixed(2)+' kHz';
+ $('diag').textContent=`Audio reaching backend: ${rt} · ${r.format} · RMS ${r.rms} · peak ${r.peak}${r.clipped_pct>0?' · clipped '+r.clipped_pct+'%':''} · browser capture ${r.client.ctx_rate||'?'} Hz, ${r.client.input_channels||'?'} ch→mono · dropped frames ${r.dropped_frames}`;
+ if(ok===false)err(`Audio rate mismatch: backend receives ${rt}, expected 16 kHz. Detection results are unreliable.`);}
+function tl(){const c=$('tl'),g=c.getContext('2d'),W=c.width,H=c.height;g.clearRect(0,0,W,H);g.strokeStyle='#ffffff1f';g.setLineDash([6,5]);g.beginPath();g.moveTo(0,H*(1-thr));g.lineTo(W,H*(1-thr));g.stroke();g.setLineDash([]);
+ g.strokeStyle='#7c8cff';g.lineWidth=3;g.lineJoin='round';g.beginPath();data.forEach((v,i)=>{const x=i/99*W,y=H-8-(H-16)*v;i?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()}
+function wave(){if(!an)return;const c=$('wave'),g=c.getContext('2d'),b=new Float32Array(an.fftSize);an.getFloatTimeDomainData(b);g.clearRect(0,0,c.width,c.height);g.strokeStyle='#b07cff';g.lineWidth=2;g.beginPath();
+ let pk=0;for(let i=0;i<b.length;i++){pk=Math.max(pk,Math.abs(b[i]));const x=i/b.length*c.width,y=c.height/2+b[i]*c.height*.45;i?g.lineTo(x,y):g.moveTo(x,y)}g.stroke();$('lvl').textContent=pk>.99?'CLIP':Math.round(pk*100)+'%';raf=requestAnimationFrame(wave)}
+async function devices(){try{const d=(await navigator.mediaDevices.enumerateDevices()).filter(x=>x.kind==='audioinput'),cur=$('dev').value;$('dev').innerHTML=d.length?d.map((x,i)=>`<option value="${x.deviceId}">${(x.label||'Microphone '+(i+1)).replace(/</g,'')}</option>`).join(''):'<option value="">No microphone found</option>';if(cur)$('dev').value=cur}catch(e){}}
+function connect(){ws=new WebSocket((location.protocol==='https:'?'wss://':'ws://')+location.host+'/ws/stream');
+ ws.onopen=()=>{tries=0;sentN=0;sentAt={};rtts=[];$('conn').textContent='Connected';ws.send(JSON.stringify({client:CLIENT}));ws.send(JSON.stringify({sensitivity:+$('sens').value}));if(prof)ws.send(JSON.stringify({profile:prof}))};
+ ws.onmessage=e=>{try{onMsg(JSON.parse(e.data))}catch(x){}};
+ ws.onclose=()=>{if(run&&!stopping&&tries<3){tries++;$('conn').textContent='Reconnecting… ('+tries+'/3)';setTimeout(connect,1000*tries)}else if(run){err('Connection to the local server was lost. Is it still running?');stop()}}}
+async function start(){
+ err('');stopping=false;if(!navigator.mediaDevices){err('This browser blocks audio capture. Use Chrome/Edge on http://localhost:8000 or an https link.');return false}
+ try{stream=$('src').value==='tab'?await navigator.mediaDevices.getDisplayMedia({video:true,audio:true}):
+  await navigator.mediaDevices.getUserMedia({audio:{deviceId:$('dev').value?{exact:$('dev').value}:undefined,echoCancellation:false,noiseSuppression:false,autoGainControl:false}})}
+ catch(e){const m={NotAllowedError:'Microphone permission was denied. Click the lock icon in the address bar, allow the microphone and try again.',NotFoundError:'No microphone found. Plug one in and press Start again.',NotReadableError:'The microphone is busy in another app.',OverconstrainedError:'Selected microphone is unavailable. Choose another.'};err(m[e.name]||'Could not start audio: '+e.message);return false}
+ if(!stream.getAudioTracks().length){err('No audio was shared. In the picker tick “Share tab audio”.');stream.getTracks().forEach(t=>t.stop());return false}
+ stream.getAudioTracks()[0].onended=()=>{if(run){err('The audio device was disconnected.');stop()}};await devices();
+ try{ctx=new AudioContext();await ctx.resume();await ctx.audioWorklet.addModule('/static/worklet.js')}
+ catch(e){err('Audio engine failed to start: '+e.message);stream.getTracks().forEach(t=>t.stop());return false}
+ const rate=ctx.sampleRate,rs=new StreamResampler(rate),ts=stream.getAudioTracks()[0].getSettings?stream.getAudioTracks()[0].getSettings():{};
+ CLIENT={ctx_rate:rate,channels:ts.channelCount||undefined,echo_cancellation:!!ts.echoCancellation,noise_suppression:!!ts.noiseSuppression,auto_gain:!!ts.autoGainControl};
+ node=new AudioWorkletNode(ctx,'cap');const src=ctx.createMediaStreamSource(new MediaStream(stream.getAudioTracks()));an=ctx.createAnalyser();an.fftSize=1024;src.connect(an);src.connect(node);
+ let pend=new Float32Array(0),chSeen=0;
+ node.port.onmessage=e=>{if(e.data.c!==chSeen){chSeen=e.data.c;CLIENT.input_channels=chSeen;ws&&ws.readyState===1&&ws.send(JSON.stringify({client:CLIENT}))}
+  const o=rs.push(e.data.d);if(!o.length)return;const p=new Float32Array(pend.length+o.length);p.set(pend);p.set(o,pend.length);pend=p;
+  if(pend.length>=2048){if(ws&&ws.readyState===1){sentN++;sentAt[sentN]=performance.now();delete sentAt[sentN-200];ws.send(pend.buffer)}pend=new Float32Array(0)}};
+ run=true;data=[];lats=[];connect();$('go').disabled=true;$('stop').disabled=false;$('state').textContent='Monitoring';$('advice').textContent='Listening for speech…';raf=requestAnimationFrame(wave);return true}
+function stop(){stopping=true;run=false;cancelAnimationFrame(raf);try{ws&&ws.close()}catch(e){}try{if(node){node.port.onmessage=null;node.disconnect()}}catch(e){}try{ctx&&ctx.close()}catch(e){}stream&&stream.getTracks().forEach(t=>t.stop());ws=ctx=stream=node=an=null;
+ $('go').disabled=false;$('stop').disabled=true;$('conn').textContent='Idle';$('state').textContent='Not monitoring';$('state').style.color='';$('hero').className='card hero';$('score').textContent='—';$('fg').style.strokeDashoffset=440;enrolling=false;events()}
+$('go').onclick=start;$('stop').onclick=stop;addEventListener('pagehide',stop);navigator.mediaDevices&&navigator.mediaDevices.addEventListener&&navigator.mediaDevices.addEventListener('devicechange',devices);
+$('sens').oninput=e=>{thr=.3+.4*e.target.value/100;$('thr').textContent=thr.toFixed(2);ws&&ws.readyState===1&&ws.send(JSON.stringify({sensitivity:+e.target.value}))};
+$('enroll').onclick=async()=>{if(enrolling)return;if(!run&&!(await start()))return;enrolling=true;ws.send(JSON.stringify({mode:'enroll'}));let t=12;$('enroll').textContent='Recording '+t+'s';
+ const iv=setInterval(()=>{t--;$('enroll').textContent='Recording '+t+'s';if(t<=0||!run){clearInterval(iv);run&&ws.readyState===1&&ws.send(JSON.stringify({mode:'finish_enroll'}))}},1000)};
+$('clr').onclick=()=>{prof=null;LS('vv_profile',null);ws&&ws.readyState===1&&ws.send(JSON.stringify({profile:null}));$('enSt').textContent='Voice profile removed.';$('enroll').textContent='● Record'};
+if(prof){$('enSt').textContent='✅ Trusted voice saved in this browser.';$('enroll').textContent='● Re-record'}
+async function demo(k){$('res').textContent='Analysing synthetic audio…';try{const j=await (await fetch('/api/demo/'+k)).json();data=j.windows.filter(w=>w.trust!=null).map(w=>w.trust);tl();
+ const last=j.windows.filter(w=>w.trust!=null).pop();if(last){showState(last);meters(last.signals)}$('demoTag').classList.add('show');$('res').textContent=`DEMO result: ${j.verdict} · mean ${j.mean_trust} · ${j.avg_latency_ms} ms compute/decision`}catch(e){$('res').textContent='Demo failed: server not reachable.'}}
+$('dr').onclick=()=>demo('real');$('df').onclick=()=>demo('fake');
+async function events(){try{const l=await (await fetch('/api/events')).json();$('log').innerHTML=l.length?'<tr><th>Time</th><th>Score</th></tr>'+l.map(x=>`<tr><td>${x.time}</td><td>${x.score}</td></tr>`).join(''):'<tr><td class="hint">No high-risk events yet.</td></tr>'}catch(e){}}
+$('clrlog').onclick=async()=>{if(confirm('Delete all saved events?')){await fetch('/api/events',{method:'DELETE'});events()}};
+fetch('/api/health').then(r=>r.json()).then(h=>{const m=h.model;$('minfo').textContent=`${m.name}, trained on ${m.trained_on==='user_dataset'?'your dataset':'SYNTHETIC signals'}${m.holdout_accuracy?` (held-out accuracy ${m.holdout_accuracy}, same-source data)`:''}; not validated on real cloned voices.`}).catch(()=>{$('minfo').textContent='Server not reachable.'});
+devices();events();tl();
+</script></body></html>
