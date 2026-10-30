@@ -39,6 +39,7 @@ def test_ws_decisions_carry_chunk_counter_and_server_ms_and_bad_client_info_reje
 
 def test_frontend_assets_served():
     assert c.get("/static/resample.js").status_code == 200 and c.get("/static/worklet.js").status_code == 200
+    assert c.get("/frontend/resample.js").status_code == 200 and c.get("/frontend/worklet.js").status_code == 200
     assert "StreamResampler" in c.get("/static/resample.js").text
 
 

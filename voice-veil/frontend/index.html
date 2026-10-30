@@ -56,7 +56,7 @@ canvas{width:100%;display:block;border-radius:12px;background:#0e1530}#wave{heig
 <section class="card"><h2>Demo mode (synthetic audio)</h2><div class="ctl"><button id="dr">Natural-like</button><button id="df">Synthetic-like</button></div><p class="hint" id="res">Runs the prototype on generated audio. Not real-world detection.</p></section>
 <section class="card"><h2>High-risk events (time + score only)</h2><table id="log"></table><div class="ctl" style="margin-top:10px"><button id="clrlog">Clear all events</button></div></section>
 </div></main>
-<script src="/static/resample.js"></script>
+<script src="/frontend/resample.js"></script>
 <script>
 const $=i=>document.getElementById(i),LS=(k,v)=>{try{return v===undefined?JSON.parse(localStorage.getItem(k)):localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
 const NAME={MONITORING:'Monitoring',INCONCLUSIVE:'Inconclusive',LOW_RISK:'Low risk indicators',ELEVATED:'Elevated risk',HIGH:'High risk',ENROLLING:'Recording voice…'},
@@ -102,7 +102,7 @@ async function start(){
  catch(e){const m={NotAllowedError:'Microphone permission was denied. Click the lock icon in the address bar, allow the microphone and try again.',NotFoundError:'No microphone found. Plug one in and press Start again.',NotReadableError:'The microphone is busy in another app.',OverconstrainedError:'Selected microphone is unavailable. Choose another.'};err(m[e.name]||'Could not start audio: '+e.message);return false}
  if(!stream.getAudioTracks().length){err('No audio was shared. In the picker tick “Share tab audio”.');stream.getTracks().forEach(t=>t.stop());return false}
  stream.getAudioTracks()[0].onended=()=>{if(run){err('The audio device was disconnected.');stop()}};await devices();
- try{ctx=new AudioContext();await ctx.resume();await ctx.audioWorklet.addModule('/static/worklet.js')}
+ try{ctx=new AudioContext();await ctx.resume();await ctx.audioWorklet.addModule('/frontend/worklet.js')}
  catch(e){err('Audio engine failed to start: '+e.message);stream.getTracks().forEach(t=>t.stop());return false}
  const rate=ctx.sampleRate,rs=new StreamResampler(rate),ts=stream.getAudioTracks()[0].getSettings?stream.getAudioTracks()[0].getSettings():{};
  CLIENT={ctx_rate:rate,channels:ts.channelCount||undefined,echo_cancellation:!!ts.echoCancellation,noise_suppression:!!ts.noiseSuppression,auto_gain:!!ts.autoGainControl};

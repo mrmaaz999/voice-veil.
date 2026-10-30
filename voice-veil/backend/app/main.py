@@ -21,6 +21,7 @@ MODEL, INFO = load_or_train(), model_info()
 INFO["fast_inference"] = bool(getattr(MODEL, "fast", False))
 app = FastAPI(title="Voice Veil", version="3.1")
 app.mount("/static", StaticFiles(directory=str(ROOT / "frontend")), name="static")
+app.mount("/frontend", StaticFiles(directory=str(ROOT / "frontend")), name="frontend")
 
 ADVICE = {
     "MONITORING": "Listening. Waiting for speech.",
